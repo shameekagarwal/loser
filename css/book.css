@@ -1,0 +1,142 @@
+.container {
+  display: grid;
+  grid-template-areas: "card card";
+  gap: 1rem;
+}
+
+.card {
+  grid-area: "card";
+  box-shadow: 0 0 7px #fff;
+}
+
+.cardbody {
+  padding: 0.5rem;
+  display: grid;
+  grid-template-areas: "label property";
+  gap: 10px;
+}
+
+.label {
+  grid-area: "label";
+}
+
+.property > input {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  color: black !important;
+  width: 3rem;
+  text-align: center;
+}
+
+.property {
+  grid-area: "property";
+}
+
+.property > button {
+  cursor: pointer;
+  padding: 2px 5px 2px 5px;
+}
+
+.xtra {
+  line-height: 3rem;
+  display: flex;
+  align-items: center;
+}
+
+.cardheader,
+.cardfooter {
+  background-color: rgba(255, 255, 255, 0.7);
+  color: black;
+  padding: 0.5rem;
+}
+
+.cardheader > span {
+  color: black;
+}
+
+.cardheader > span > a {
+  color: black;
+}
+
+.cardheader > span > i {
+  color: black;
+}
+
+.cardfooter > button {
+  cursor: pointer;
+}
+
+.cardfooter > button {
+  cursor: pointer;
+}
+
+.cardfooter {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.cardheader {
+  display: flex;
+  justify-content: space-between;
+}
+
+.activeaddon {
+  background-color: rgba(255, 255, 255, 0.7);
+  color: black;
+}
+
+.activeaddon > i {
+  color: rgba(0, 0, 0, 1) !important;
+}
+
+.addonSelect > i {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.reserve {
+  padding: 2px 7px 2px 7px;
+}
+
+@media only screen and (max-width: 900px) {
+  .container {
+    grid-template-areas: "card";
+  }
+}
+
+.search {
+  padding: 5px;
+  box-shadow: 0 0 7px #fff;
+  margin-top: 12px;
+  cursor: pointer;
+}
+
+.details {
+  display: none;
+}
+
+#origin {
+  color: black;
+  padding: 5px;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+#overlay,
+#overlay2 {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  display: none;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+#flash,
+#flash2 {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}

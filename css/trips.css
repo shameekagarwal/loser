@@ -1,0 +1,114 @@
+.container {
+  display: grid;
+  grid-template-areas: "card card";
+  gap: 1rem;
+}
+
+.card {
+  grid-area: "card";
+  box-shadow: 0 0 7px #fff;
+}
+
+.cardbody {
+  padding: 0.5rem;
+  display: grid;
+  grid-template-areas: "label property";
+  gap: 10px;
+}
+
+.label {
+  grid-area: "label";
+}
+
+.property {
+  grid-area: "property";
+}
+
+.property > button {
+  padding: 2px 5px 2px 5px;
+}
+
+.xtra {
+  line-height: 3rem;
+  display: flex;
+  align-items: center;
+}
+
+.cardheader,
+.cardfooter {
+  background-color: rgba(255,255,255,0.7);
+  color: black;
+  padding: 0.5rem;
+}
+
+.cardheader > span {
+  color: black;
+}
+
+.cardheader > span > i {
+  color: black;
+}
+
+.cardfooter > button {
+  cursor: pointer;
+}
+
+.cardfooter {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cardheader {
+  display: flex;
+  justify-content: space-between;
+}
+
+.activeaddon {
+  background-color: rgba(255,255,255,0.7);
+  color: black;
+}
+
+.delete {
+  padding: 2px 7px 2px 7px;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 900px) {
+  .container {
+    grid-template-areas: "card";
+  }
+}
+
+.total {
+  background-color: rgba(255,255,255,0.7);
+  width: 90%;
+  margin-left: 5%;
+  text-align: right;
+  padding: 1rem;
+  box-shadow: 0 0 7px #fff;
+}
+
+.total > pre {
+  color: black;
+}
+
+.total > pre > i {
+  color: black;
+}
+
+.payment {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.pay {
+  background-color: rgba(255,255,255,0.7);
+  color: black;
+  padding: 5px 10px 5px 10px;
+  box-shadow: 0 0 7px #fff;
+  cursor: pointer;
+}
+
+.pay > i {
+  color: black;
+}

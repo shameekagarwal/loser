@@ -1,0 +1,35 @@
+h1 {
+  color: rgba(255,255,255,0.7);
+  -webkit-text-fill-color: black;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: rgba(255,255,255,0.7);
+  font-size: 3rem;
+  line-height: 3.5rem;
+  text-align: center;
+}
+
+h4 {
+  color: rgba(255,255,255,0.7);
+  -webkit-text-fill-color: black;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: rgba(255,255,255,0.7);
+  text-align: center;
+}
+
+.container,
+.navbar {
+  animation: fadein 7s;
+}
+
+.container {
+  text-align: center;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

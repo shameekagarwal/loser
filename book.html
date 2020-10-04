@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="css/fontawesome/rocket.svg" />
+    <title>BOOK</title>
+
+    <link rel="stylesheet" href="css/fontawesome/fontawesome.min.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/book.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <a href="index.html">
+        <div class="navbarlogo large">
+          <i class="fas fa-rocket fa-sm"></i> SPACEBER
+        </div>
+      </a>
+      <div class="navbarlinks">
+        <button class="navbaractive">
+          <li><a href="#">BOOK</a></li>
+        </button>
+        <button>
+          <li><a href="trips.html">TRIPS</a></li>
+        </button>
+        <button>
+          <li><a href="history.html">HISTORY</a></li>
+        </button>
+      </div>
+    </nav>
+
+    <div class="message">
+      select add to avail addons<br />an additional 20k will be added to the
+      base price<br /><br />
+      <div class="input">
+        <form onsubmit="searchorigin()">
+          <label for="origin">Enter pickup planet</label><br />
+          <input
+            type="text"
+            id="origin"
+            name="origin"
+            oninput="this.value = this.value.toUpperCase()"
+          /><br />
+          <button class="activeaddon search">
+            <i class="fas fa-search"></i> SEARCH
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div class="container"></div>
+
+    <div id="overlay">
+      <div id="flash"><h1>ADDED TO TRIPS</h1></div>
+    </div>
+
+    <div id="overlay2">
+      <div id="flash2"><h1>NUMBER SHOULD BE BETWEEN 1 and 5</h1></div>
+    </div>
+  </body>
+
+  <script>
+    const planets = ["Earth", "Mars", "Jupiter", "Saturn"];
+    const spacecrafts = [
+      "carnage",
+      "fallingstar",
+      "harlequin",
+      "pegasus",
+      "phoenix",
+      "rhinoceros",
+    ];
+
+    const container = document.querySelector(".container");
+    let pre = "";
+    const params = new URLSearchParams(window.location.search);
+    for (const param of params) {
+      if (param[0] === "origin") {
+        pre = param[1];
+      }
+    }
+    switch (pre) {
+      case "EARTH":
+        break;
+      case "MARS":
+        break;
+      case "JUPITER":
+        break;
+      case "":
+        break;
+      default:
+        window.location.href = "map.html";
+    }
+    for (let i = 0; i < 30; i++) {
+      let ri = -1;
+      if (pre === "") {
+        ri = Math.floor(Math.random() * 3);
+      } else {
+        switch (pre) {
+          case "EARTH":
+            ri = 0;
+            break;
+          case "MARS":
+            ri = 1;
+            break;
+          case "JUPITER":
+            ri = 2;
+            break;
+          default:
+            window.location.href = "map.html";
+        }
+      }
+      const rj = Math.floor(Math.random() * (3 - ri)) + ri + 1;
+      const scft = Math.floor(Math.random() * 6);
+      const flight = {
+        source: planets[ri],
+        destination: planets[rj],
+        spacecraft: spacecrafts[scft],
+        addons: Math.floor(Math.random() * 2),
+        cost: (rj - ri) * 1000 + Math.floor(Math.random() * 500),
+      };
+      const card = document.createElement("div");
+      card.classList.add("card");
+      const cardHeader = document.createElement("div");
+      cardHeader.classList.add("cardheader");
+      const cardBody = document.createElement("div");
+      cardBody.classList.add("cardbody");
+      const cardFooter = document.createElement("div");
+      cardFooter.classList.add("cardfooter");
+      cardHeader.innerHTML = `<span><a href='spacecrafts.html'>${flight.spacecraft}</a></span>`;
+      cardHeader.innerHTML += `<span><i class="fas fa-rupee-sign"></i> ${flight.cost}k</span>`;
+      cardBody.innerHTML += `<label class='label'>FROM</label><p class='property'>${flight.source}</p>`;
+      cardBody.innerHTML += `<label class='label'>TO</label><p class='property'>${flight.destination}</p>`;
+      cardBody.innerHTML += `<label class='label'>NUMBER</label><p class='property'><input type='text' /></p>`;
+      if (flight.addons) {
+        cardBody.innerHTML += `<label class='label xtra'>ADDONS</label><p class='property xtra'><button class='addonSelect'><i class="fas fa-stop"></i> add</button></p>`;
+      } else {
+        cardBody.innerHTML += `<label class='label xtra'>ADDONS</label><p class='property xtra'>NA</p>`;
+      }
+      cardFooter.innerHTML = `<button class='reserve'><i class="fas fa-ticket-alt"></i> RESERVE</button>`;
+      cardFooter.innerHTML += `<span class='details'>${JSON.stringify(
+        flight,
+        null,
+        2
+      )}</span>`;
+      card.appendChild(cardHeader);
+      card.appendChild(cardBody);
+      card.appendChild(cardFooter);
+      container.appendChild(card);
+    }
+    const addonSelect = document.getElementsByClassName("addonSelect");
+    for (let i = 0; i < addonSelect.length; i++) {
+      const addon = addonSelect[i];
+      addon.addEventListener("click", () => {
+        if (addon.classList.contains("activeaddon")) {
+          addon.classList.remove("activeaddon");
+        } else {
+          addon.classList.add("activeaddon");
+        }
+      });
+    }
+    const reserves = document.getElementsByClassName("reserve");
+    const overlay = document.querySelector("#overlay");
+    const flash = document.querySelector("#flash");
+    const overlay2 = document.querySelector("#overlay2");
+    const flash2 = document.querySelector("#flash2");
+    for (let i = 0; i < reserves.length; i++) {
+      const reserve = reserves[i];
+      reserve.addEventListener("click", (e) => {
+        const trips = localStorage.getItem("trips")
+          ? JSON.parse(localStorage.getItem("trips"))
+          : [];
+        const flight = JSON.parse(reserve.nextSibling.innerHTML);
+        const addon =
+          reserve.parentNode.parentNode.children[1].children[7].firstChild;
+        const numberoftickets =
+          reserve.parentNode.parentNode.children[1].children[5].firstChild
+            .value;
+        if (
+          !numberoftickets.match("^[0-9]*[1-9][0-9]*$") ||
+          parseInt(numberoftickets) > 5
+        ) {
+          overlay2.style.display = "block";
+          flash2.style.display = "block";
+          setTimeout(() => {
+            overlay2.style.display = "none";
+            flash2.style.display = "none";
+          }, 1200);
+        } else {
+          overlay.style.display = "block";
+          flash.style.display = "block";
+          setTimeout(() => {
+            overlay.style.display = "none";
+            flash.style.display = "none";
+          }, 1200);
+          let newTrips = trips;
+          for (
+            let totaltimes = 0;
+            totaltimes < parseInt(numberoftickets);
+            totaltimes++
+          ) {
+            const newFlight = JSON.parse(JSON.stringify(flight));
+            if (addon.classList && addon.classList.contains("activeaddon")) {
+              newFlight.cost += 20;
+              newFlight.addons = "YES";
+            } else {
+              newFlight.addons = null;
+            }
+            newFlight.id = newTrips.length
+              ? newTrips[newTrips.length - 1].id + 1
+              : 1;
+            newTrips = [...newTrips, newFlight];
+          }
+          localStorage.setItem("trips", JSON.stringify(newTrips));
+        }
+      });
+    }
+  </script>
+</html>

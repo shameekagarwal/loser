@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="css/fontawesome/rocket.svg" />
+    <title>HISTORY</title>
+
+    <link rel="stylesheet" href="css/fontawesome/fontawesome.min.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/history.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <a href="index.html">
+        <div class="navbarlogo large">
+          <i class="fas fa-rocket fa-sm"></i> SPACEBER
+        </div>
+      </a>
+      <div class="navbarlinks">
+        <button>
+          <li><a href="book.html">BOOK</a></li>
+        </button>
+        <button>
+          <li><a href="trips.html">TRIPS</a></li>
+        </button>
+        <button class="navbaractive">
+          <li><a href="#">HISTORY</a></li>
+        </button>
+      </div>
+    </nav>
+
+    <div class="message">click on any booking to view its receipt</div>
+
+    <div class="container"></div>
+  </body>
+  <script>
+    const orders = localStorage.getItem("orders")
+      ? JSON.parse(localStorage.getItem("orders"))
+      : [];
+    const container = document.querySelector(".container");
+    orders.forEach((order, index) => {
+      const cardheader = document.createElement("div");
+      const card = document.createElement("div");
+      cardheader.classList.add("cardheader");
+      card.classList.add("card");
+      let formatted = new Date(order.date).toString();
+      formatted = formatted.substring(0, formatted.indexOf("G"));
+      cardheader.innerText = formatted;
+      card.appendChild(cardheader);
+      card.innerHTML += `<br /><pre>TOTAL   <i class="fas fa-rupee-sign"></i> ${order.total}</pre>`;
+      container.appendChild(card);
+      card.addEventListener("click", () => {
+        window.location.href = `receipt.html?id=${index + 1}`;
+      });
+    });
+  </script>
+</html>

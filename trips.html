@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="css/fontawesome/rocket.svg" />
+    <title>TRIPS</title>
+
+    <link rel="stylesheet" href="css/fontawesome/fontawesome.min.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/trips.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <a href="index.html">
+        <div class="navbarlogo large">
+          <i class="fas fa-rocket fa-sm"></i> SPACEBER
+        </div>
+      </a>
+      <div class="navbarlinks">
+        <button>
+          <li><a href="book.html">BOOK</a></li>
+        </button>
+        <button class="navbaractive">
+          <li><a href="#">TRIPS</a></li>
+        </button>
+        <button>
+          <li><a href="history.html">HISTORY</a></li>
+        </button>
+      </div>
+    </nav>
+
+    <div class="message">
+      COMPLETE THE PAYMENT PROCEDURE BY SCROLLING DOWN TO PAY
+    </div>
+
+    <div class="container"></div>
+
+    <div class="payment">
+      <div class="total"></div>
+    </div>
+  </body>
+  <script>
+    const trips = localStorage.getItem("trips")
+      ? JSON.parse(localStorage.getItem("trips"))
+      : [];
+
+    const deleteTicket = (id) => {
+      const newTrips = trips.filter((trip) => trip.id !== id);
+      localStorage.setItem("trips", JSON.stringify(newTrips));
+      window.location.href = "trips.html";
+    };
+
+    const completePayment = () => {
+      window.location.href = "pay.html";
+    };
+
+    const container = document.querySelector(".container");
+    let totalCost = 0;
+    trips.forEach((flight) => {
+      const card = document.createElement("div");
+      card.classList.add("card");
+      const cardHeader = document.createElement("div");
+      cardHeader.classList.add("cardheader");
+      const cardBody = document.createElement("div");
+      cardBody.classList.add("cardbody");
+      const cardFooter = document.createElement("div");
+      cardFooter.classList.add("cardfooter");
+      cardHeader.innerHTML = `<span>${flight.spacecraft}</span>`;
+      cardHeader.innerHTML += `<span><i class="fas fa-rupee-sign"></i> ${flight.cost}k</span>`;
+      cardBody.innerHTML += `<label class='label'>FROM</label><p class='property'>${flight.source}</p>`;
+      cardBody.innerHTML += `<label class='label'>TO</label><p class='property'>${flight.destination}</p>`;
+      if (flight.addons) {
+        cardBody.innerHTML += `<label class='label xtra'>ADDONS</label><p class='property xtra'><button class='activeaddon'>YES</button></p>`;
+      } else {
+        cardBody.innerHTML += `<label class='label xtra'>ADDONS</label><p class='property xtra'>NA</p>`;
+      }
+      totalCost += flight.cost;
+      const deleteButton = document.createElement("button");
+      deleteButton.innerHTML = `<button class='delete'><i class="fas fa-trash"></i> DELETE</button>`;
+      deleteButton.addEventListener("click", () => deleteTicket(flight.id));
+      cardFooter.appendChild(deleteButton);
+      card.appendChild(cardHeader);
+      card.appendChild(cardBody);
+      card.appendChild(cardFooter);
+      container.appendChild(card);
+    });
+    const totalDiv = document.querySelector(".total");
+    totalDiv.innerHTML = `<pre>TOTAL    <i class="fas fa-rupee-sign"></i> ${totalCost}</pre>`;
+    if (totalCost) {
+      const payment = document.querySelector(".payment");
+      const payButton = document.createElement("button");
+      payButton.innerHTML = `<i class="fas fa-money-bill"></i> PAY`;
+      payButton.classList.add("pay");
+      payment.appendChild(document.createElement("br"));
+      payment.appendChild(payButton);
+      payButton.addEventListener("click", completePayment);
+    }
+  </script>
+</html>

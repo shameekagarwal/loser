@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="css/fontawesome/rocket.svg" />
+    <title>PAY</title>
+    <link rel="stylesheet" href="css/fontawesome/fontawesome.min.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/pay.css" />
+  </head>
+  <body>
+    <div class="container">
+      This calamity has destroyed thousands.
+      <br />
+      We try to do whatever little we can to help everyone.
+      <br />
+      Support us in this noble cause by booking a smile.
+      <br />
+      <i class="fas fa-rupee-sign"></i> 10k will be added to the total amount
+      <br /><br />
+      <button class="bookasmile btn">BOOK-A-SMILE</button>
+      <button class="proceed btn">PROCEED</button>
+      <br /><br />
+      <button class="backgoer">
+        <a href="trips.html">
+          <i class="fas fa-arrow-left"></i> BACK TO TRIPS
+        </a>
+      </button>
+    </div>
+  </body>
+  <script>
+    const trips = localStorage.getItem("trips")
+      ? JSON.parse(localStorage.getItem("trips"))
+      : [];
+    if (trips.length === 0) {
+      window.location.href = "book.html";
+    }
+    const smile = document.querySelector(".bookasmile");
+    smile.addEventListener("click", () => {
+      if (smile.classList.contains("active")) {
+        smile.classList.remove("active");
+      } else {
+        smile.classList.add("active");
+      }
+    });
+    const proceed = document.querySelector(".proceed");
+    proceed.addEventListener("click", () => {
+      const orders = localStorage.getItem("orders")
+        ? JSON.parse(localStorage.getItem("orders"))
+        : [];
+      let totalCost = 0;
+      trips.forEach((trip) => {
+        totalCost += trip.cost;
+      });
+      if (smile.classList.contains("active")) {
+        totalCost += 10;
+      }
+      const current = { date: new Date(), total: totalCost, trips };
+      const newOrders = [...orders, current];
+      localStorage.setItem("orders", JSON.stringify(newOrders));
+      localStorage.setItem("trips", JSON.stringify([]));
+      window.location.href = `receipt.html?id=${newOrders.length}`;
+    });
+  </script>
+</html>

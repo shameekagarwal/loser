@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="css/fontawesome/rocket.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/fontawesome/fontawesome.min.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/receipt.css" />
+    <title>RECEIPT</title>
+  </head>
+  <body>
+    <div class="newcontainer">
+      <br />
+      <a href="index.html">
+        <h3><i class="fas fa-rocket"></i> SPACEBER</h3>
+      </a>
+      <br />
+      here is your receipt <br />
+      SCROLL DOWN TO GO BACK TO HISTORY
+    </div>
+    <div class="back">
+      <button class="backgoer">
+        <a href="history.html">
+          <i class="fas fa-arrow-left"></i> BACK TO HISTORY
+        </a>
+      </button>
+    </div>
+  </body>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    for (const param of params) {
+      if (!param[0] === "id") {
+        window.location.href = "index.html";
+      }
+      if (!param[1].match("^[0-9]*[1-9][0-9]*$")) {
+        window.location.href = "index.html";
+      }
+      let receipt = param[1];
+      const orders = localStorage.getItem("orders")
+        ? JSON.parse(localStorage.getItem("orders"))
+        : [];
+      receipt = Number.parseInt(receipt);
+      if (receipt > orders.length) {
+        window.location.href = "index.html";
+      }
+      receipt--;
+      const rct = orders[receipt];
+      const container = document.querySelector(".newcontainer");
+      const bill = document.createElement("div");
+      bill.classList.add("bill");
+      const { date, total, trips } = rct;
+      let formatted = new Date(date).toString();
+      formatted = formatted.substring(0, formatted.indexOf("G"));
+      const dateP = document.createElement("p");
+      dateP.innerText = formatted;
+      bill.appendChild(document.createElement("br"));
+      bill.appendChild(dateP);
+      bill.appendChild(document.createElement("br"));
+      trips.forEach((trip) => {
+        const table = document.createElement("table");
+        table.innerHTML = `<tr><td>FROM</td><td>${trip.source}</td></tr>`;
+        table.innerHTML += `<tr><td>TO</td><td>${trip.destination}</td></tr>`;
+        table.innerHTML += `<tr><td>ADDONS</td><td>${
+          trip.addons ? "YES" : "NO"
+        }</td></tr>`;
+        table.innerHTML += `<tr><td>SPACECRAFT</td><td>${trip.spacecraft}</td></tr>`;
+        table.innerHTML += `<tr><td>COST</td><td>${trip.cost}</td></tr>`;
+        bill.appendChild(table);
+        bill.appendChild(document.createElement("br"));
+      });
+      const tab = document.createElement("p");
+      tab.innerHTML = `<pre>TOTAL    <i class="fas fa-rupee-sign"></i> ${total}</pre>`;
+      bill.appendChild(tab);
+      bill.appendChild(document.createElement("br"));
+      bill.appendChild(document.createElement("br"));
+      container.appendChild(bill);
+    }
+  </script>
+</html>

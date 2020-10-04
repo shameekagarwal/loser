@@ -1,0 +1,93 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  font-family: "Montserrat", sans-serif;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.7);
+  list-style: none;
+  font-size: 1.1rem;
+  line-height: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  word-spacing: 5px;
+}
+
+body {
+  background-image: url("../img/space.jpg");
+  background-repeat: repeat;
+  background-attachment: scroll;
+}
+
+button {
+  background-color: black;
+}
+
+.large {
+  font-size: 1.7rem;
+}
+
+.navbar {
+  display: grid;
+  grid-template-areas: "navbarlogo navbarlinks";
+  justify-content: "space-between";
+  line-height: 2rem;
+  align-items: center;
+  width: 90%;
+  margin-left: 5%;
+}
+
+.navbarlogo {
+  grid-area: "navbarlogo";
+  margin: 0.7rem;
+}
+
+.navbarlinks {
+  display: flex;
+  grid-area: "nabarlinks";
+  justify-content: flex-end;
+}
+
+.navbarlinks > button {
+  margin: 0.7rem;
+}
+
+.navbaractive {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+@media only screen and (max-width: 650px) {
+  .navbar {
+    grid-template-areas:
+      "navbarlogo"
+      "navbarlinks";
+  }
+  .navbarlogo {
+    text-align: center;
+  }
+  .navbarlinks {
+    justify-content: center;
+  }
+}
+
+.message {
+  margin-top: 3rem;
+  text-align: center;
+  width: 90%;
+  margin-left: 5%;
+}
+
+.container {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  width: 90%;
+  margin-left: 5%;
+}
+
+.backgoer {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+}

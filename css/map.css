@@ -1,0 +1,21 @@
+.container {
+  text-align: center;
+}
+.container > * {
+  text-align: center;
+}
+
+td {
+  padding: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+th {
+  font-weight: bolder;
+}
+
+table {
+  margin: 0 auto;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-collapse: collapse;
+}
